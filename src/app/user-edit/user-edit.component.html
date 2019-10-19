@@ -1,0 +1,58 @@
+<div class="jumbotron">
+
+  <div class="container" *ngIf="user">
+    <div class="col-md-6 offset-md-3" [hidden]="submitted">
+      <h1>User Form</h1>
+      <form (ngSubmit)="saveUser()" #heroForm="ngForm">
+
+        <div class="form-group">
+          <label for="userName">Name</label>
+          <input type="text" class="form-control" id="userName" required [(ngModel)]="user.userName" name="userName"
+                 #userName="ngModel">
+          <div [hidden]="userName.valid || userName.pristine"
+               class="alert alert-danger">
+            User Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email"/>
+        </div>
+
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" class="form-control" id="first_name" [(ngModel)]="user.firstName" name="firstName"/>
+        </div>
+
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" class="form-control" id="last_name" [(ngModel)]="user.lastName" name="lastName"/>
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" class="form-control" id="phone_number" [(ngModel)]="user.phoneNumber" name="phoneNumber"/>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="text" class="form-control" id="password" [(ngModel)]="user.password" name="password"/>
+        </div>
+
+        <!--https://medium.com/@agoiabeladeyemi/template-driven-forms-in-angular-4a3a5ad960de-->
+
+
+        <div class="form-group">
+          <label>  Authenticated?
+          <input type="checkbox" class="form-control" id="isAuthenticated" [(ngModel)]="user.isAuthenticated" name="isAuthenticated">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<p>users</p>
+
+<form>
+  <div class="form-group form-inline">
+      Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+  </div>
+</form>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Username</th>
+    <th scope="col">Email</th>
+    <th scope="col">First Name</th>
+    <th scope="col">Last Name</th>
+    <th scope="col">Phone</th>
+    <th scope="col">Authenticated</th>
+    <th scope="col">Date Added</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let user of users  index as i">
+    <!--<th scope="row">{{ i + 1 }}</th>-->
+    <td>
+      <ngb-highlight [result]="user.id"></ngb-highlight>
+    </td>
+    <td>
+      <a routerLink="/users/{{user.id}}">
+        <ngb-highlight [result]="user.userName" [term]="filter.value"></ngb-highlight>
+      </a>
+    </td>
+    <td><ngb-highlight [result]="user.email" [term]="filter.value"></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.firstName" [term]="filter.value"></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.lastName" [term]="filter.value"></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.phoneNumber"></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.isAuthenticated" ></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.dateAdded" ></ngb-highlight></td>
+  </tr>
+  </tbody>
+</table>
+
+

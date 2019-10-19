@@ -1,0 +1,78 @@
+// BruceW@jla.com
+
+  //https://stackblitz.com/edit/angular-8-registration-login-example?file=app%2Flogin%2Flogin.component.ts
+  //  https://stackblitz.com/edit/angular-8-registration-login-example?file=app%2Flogin%2Flogin.component.ts
+  // ng serve
+
+https://blog.angular-university.io/angular-reactive-templates/
+
+https://www.npmjs.com/package/angular-tracing
+ cp -r  ~/PycharmProjects/comic-store-angular  ~/PycharmProjects/comic-store-angular-back
+
+
+  ng add @angular/material
+https://dev.to/ismaproco/first-steps-with-angular-8-with-angular-cli-and-angular-material-33p5
+
+https://stackblitz.com/run?file=app/dropdown-manual.ts
+
+ng add @angular/material
+npm install --save @ng-bootstrap/ng-bootstrap
+npm install bootstrap@4.0.0-alpha.6
+https://www.techiediaries.com/angular-material-navigation-toolbar-sidenav/
+
+https://www.techiediaries.com/angular-material-navigation-toolbar-sidenav/
+
+https://stackblitz.com/edit/angular-dropdown
+Menu
+https://blog.angularindepth.com/angular-routing-reusing-common-layout-for-pages-from-different-modules-440a23f86b57
+https://blog.angular-university.io/angular-2-router-nested-routes-and-nested-auxiliary-routes-build-a-menu-navigation-system/
+login
+
+https://jasonwatmore.com/post/2016/12/08/angular-2-redirect-to-previous-url-after-login-with-auth-guard
+
+https://stackblitz.com/edit/angular-8-registration-login-example?file=app%2Fapp.routing.ts
+signup
+
+view grading
+
+view publishers
+
+view titles
+
+view actual books - the comic books
+
+
+add / edit comic book
+
+cd ~/PycharmProjects/comic-store-angular
+
+ng new angular-tour-of-heroes
+
+
+ng generate component NameEditor
+https://stackblitz.com/edit/angular-7-reactive-form-validation
+
+https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial
+
+https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial
+
+https://jasonwatmore.com/post/2019/06/14/angular-8-reactive-forms-validation-example
+
+https://blog.angular-university.io/angular-jwt-authentication/
+
+https://stackblitz.com/edit/angular-8-registration-login-example
+
+https://github.com/cornflourblue/angular-8-registration-login-example
+
+
+https://stackblitz.com/edit/angular-8-registration-login-example?file=app%2Fapp.component.html
+
+tour of heroe part 6
+https://stackblitz.com/angular/njnrarvkalm
+
+sample crud
+----------------
+
+https://www.javaguides.net/2019/06/angular-8-crud-example-tutorial.html
+https://www.djamware.com/post/5d0eda6f80aca754f7a9d1f5/angular-8-tutorial-learn-to-build-angular-8-crud-web-app
+https://www.tutorialandexample.com/angular-8-tutorial/
