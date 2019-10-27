@@ -1,1 +1,25 @@
-<p>publisher-edit works!</p>
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3>Angular 7 Reactive Form Validation</h3>
+        <form [formGroup]="publisherForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <label>Code</label>
+            <input type="text" formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }" />
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

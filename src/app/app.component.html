@@ -31,11 +31,11 @@
 
     <span class="example-spacer"></span>
     <div fxShow="true" fxHide.lt-sm="true">
-      <button *ngIf="!authenticated()" routerLink="/register" >
+      <button type="button" class="btn btn-light" *ngIf="!authenticated()" routerLink="/register" >
         Signup
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>&nbsp;&nbsp;
 
-      <button *ngIf="!authenticated()" routerLink="/login" mat-raised-button value="Login">
+      <button  type="button" class="btn btn-light"  *ngIf="!authenticated()" routerLink="/login"  value="Login">
         Login
         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
       </button>

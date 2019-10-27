@@ -6,21 +6,33 @@ import {UserRegisterComponent} from "./user-register/user-register.component";
 import {UserListComponent} from "./user-list/user-list.component";
 import {RoleListComponent} from "./role-list/role-list.component";
 import {UserEditComponent} from "./user-edit/user-edit.component";
+import {PublisherEditComponent} from './publisher-edit/publisher-edit.component';
+import {PublisherListComponent} from './publisher-list/publisher-list.component';
+import {RoleEditComponent} from './role-edit/role-edit.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: UserLoginComponent },
-  { path: 'register', component: UserRegisterComponent },
 
+  //comic admin
   { path: 'gradings', component: GradingListComponent },
-  { path: 'publishers', component: GradingListComponent },
+  { path: 'publishers', component: PublisherListComponent },
+  { path: 'publisher/:id', component: PublisherEditComponent },
+  { path: 'publisher', component: PublisherEditComponent },
   { path: 'titles', component: GradingListComponent },
 
   { path: 'orders', component: GradingListComponent },
 
-  { path: 'users/:id', component: UserEditComponent },
+
+  //users
+  { path: 'login', component: UserLoginComponent },
+  { path: 'register', component: UserRegisterComponent },
+
+  { path: 'user/:id', component: UserEditComponent },
   { path: 'users', component: UserListComponent },
+
   { path: 'roles', component: RoleListComponent },
+  { path: 'roles', component: RoleEditComponent },
+
 
   { path: 'dashboard', component: GradingListComponent }
 

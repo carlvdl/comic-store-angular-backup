@@ -28,7 +28,7 @@
       <ngb-highlight [result]="user.id"></ngb-highlight>
     </td>
     <td>
-      <a routerLink="/users/{{user.id}}">
+      <a routerLink="/user/{{user.id}}">
         <ngb-highlight [result]="user.userName" [term]="filter.value"></ngb-highlight>
       </a>
     </td>
@@ -41,5 +41,13 @@
   </tr>
   </tbody>
 </table>
+
+
+
+<div  class="d-inline-block" >
+  <button type="button" class="btn btn-primary" routerLink="/user"  value="Login">
+    Add User
+  </button>
+</div>
 
 

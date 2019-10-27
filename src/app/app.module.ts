@@ -29,6 +29,7 @@ import { TitleEditComponent } from './title-edit/title-edit.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RoleListComponent } from './role-list/role-list.component';
 import {DecimalPipe} from "@angular/common";
+import { RoleEditComponent } from './role-edit/role-edit.component';
 // import {DecimalPipe} from "@angular/common";
 
 @NgModule({
@@ -43,7 +44,8 @@ import {DecimalPipe} from "@angular/common";
     PublisherEditComponent,
     TitleListComponent,
     TitleEditComponent,
-    RoleListComponent
+    RoleListComponent,
+    RoleEditComponent
   ],
   imports: [
     NgbModule,
