@@ -1,3 +1,6 @@
+carlvdl@carlvdl-N501VW:~/projects/angular-material-course$ npm run server
+
+
 // BruceW@jla.com
 
   //https://stackblitz.com/edit/angular-8-registration-login-example?file=app%2Flogin%2Flogin.component.ts

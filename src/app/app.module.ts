@@ -31,6 +31,8 @@ import { RoleListComponent } from './role-list/role-list.component';
 import {DecimalPipe} from "@angular/common";
 import { RoleEditComponent } from './role-edit/role-edit.component';
 // import {DecimalPipe} from "@angular/common";
+import {  MatPaginatorModule, MatProgressSpinnerModule,
+  MatSortModule, MatTableModule } from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -66,7 +68,15 @@ import { RoleEditComponent } from './role-edit/role-edit.component';
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]

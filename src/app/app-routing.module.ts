@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent },
 
   { path: 'roles', component: RoleListComponent },
-  { path: 'roles', component: RoleEditComponent },
+  { path: 'roles/:id', component: RoleEditComponent },
 
 
   { path: 'dashboard', component: GradingListComponent }
