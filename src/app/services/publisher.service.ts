@@ -62,14 +62,19 @@ export class PublisherService {
     };
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
 
-  findPublishers(filter: string, sortDirection: string, pageIndex: number, pageSize: number):Observable<Publisher[]> {
+
+
+
+  findPublishers(filter: string, sortOrder: string, pageNumber: number, pageSize: number):Observable<Publisher[]> {
     console.log('getting Publisher in service..')
-    let publisher$ = this.http.get<Publisher[]>('http://localhost:5000/publishers')
-      .pipe(
+    let publisher$ = this.http.get<Publisher[]>('http://localhost:5000/publishers', {
+      params: new HttpParams()
+        .set('filter', filter)
+        .set('sortOrder', sortOrder)
+        .set('pageNumber', pageNumber.toString())
+        .set('pageSize', pageSize.toString())
+    }).pipe(
         tap(_ => console.log('fetched Publisher...')),
         catchError(this.handleError<Publisher[]>('findPublishers', []))
       );
@@ -78,34 +83,4 @@ export class PublisherService {
   }
 
 
-  //
-  // findPublishers(filter: string, sortDirection: string, pageIndex: number, pageSize: number) {
-  //
-  //     return this.http.get('/api/lessons', {
-  //       params: new HttpParams()
-  //         .set('courseId', courseId.toString())
-  //         .set('filter', filter)
-  //         .set('sortOrder', sortOrder)
-  //         .set('pageNumber', pageNumber.toString())
-  //         .set('pageSize', pageSize.toString())
-  //     }).pipe(
-  //       map(res =>  res["payload"])
-  //     );
-  // }
-  //
-  // findLessons(
-  //   courseId:number, filter = '', sortOrder = 'asc',
-  //   pageNumber = 0, pageSize = 3):  Observable<Lesson[]> {
-  //
-  //   return this.http.get('/api/lessons', {
-  //     params: new HttpParams()
-  //       .set('courseId', courseId.toString())
-  //       .set('filter', filter)
-  //       .set('sortOrder', sortOrder)
-  //       .set('pageNumber', pageNumber.toString())
-  //       .set('pageSize', pageSize.toString())
-  //   }).pipe(
-  //     map(res =>  res["payload"])
-  //   );
-  // }
 }
