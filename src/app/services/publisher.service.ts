@@ -73,8 +73,8 @@ export class PublisherService {
   //
 
 
-  findPublishers2(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Config>> {
-    return this.http.get<Config>(
+  findPublishers2(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Publisher[]>> {
+    return this.http.get<Publisher[]>(
       'http://localhost:5000/publishers',
       { observe: 'response',
         params: new HttpParams()

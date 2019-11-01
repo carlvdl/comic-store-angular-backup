@@ -1,8 +1,7 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {Observable, BehaviorSubject, of} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 // import {Lesson} from "../model/lesson";
 // import {CoursesService} from "./courses.service";
-import {catchError, finalize} from 'rxjs/operators';
 import {Publisher} from '../models/publisher';
 import {PublisherService} from '../services/publisher.service';
 
@@ -10,6 +9,7 @@ import {PublisherService} from '../services/publisher.service';
 export class PublishersDataSource implements DataSource<Publisher> {
 
   private publishersSubject = new BehaviorSubject<Publisher[]>([]);
+  publishersCount: Number;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
@@ -37,16 +37,24 @@ export class PublishersDataSource implements DataSource<Publisher> {
             console.log('got response --> ' + response);
             console.log('got respons body --> ' + response.body);
             console.log('got response.headers.keys() --> ' + response.headers.keys());
+            console.log('-----------------');
+            // console.log(publisherDTO);
+            this.publishersSubject.next(response.body);
             // this.publishersSubject.next(publisher);
+            // const {next} = this.publishersSubject;
+            // next(publisherDTO.body.publisherArray);
             // display its headers
-            const keys = response.headers.keys();
-            console.log('keys---> ');
-            console.log(keys);
-
-            const headers = keys.map(key =>
-              '${key}: ${response.headers.get(key)}');
-            console.log('headers ---');
-            console.log(headers );
+            let count = response.headers.get('x-total-count');
+            console.log('the count is: '+count);
+            //
+            // const keys = response.headers.keys();
+            // console.log('keys---> ');
+            // console.log(keys);
+            //
+            // const headers = keys.map(key =>
+            //   '${key}: ${response.headers.get(key)}');
+            // console.log('headers ---');
+            // console.log(headers );
           });
 
   //   this.publisherService.findPublishers(filter, sortDirection, pageIndex, pageSize).pipe(
