@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {User} from '../models/user';
 import {Publisher} from '../models/publisher';
 import {catchError, map, tap} from 'rxjs/operators';
+import {Config} from '../models/config';
 
 @Injectable({
   providedIn: 'root'
@@ -62,12 +63,51 @@ export class PublisherService {
     };
   }
 
+  //https://angular.io/guide/http
+  // createOrder(url) : Observable<HttpResponse<Object>>{
+  //
+  //   return this.http.get<HttpResponse<Object>>(this.url, {observe: 'response'}).pipe(
+  //     tap(resp => console.log('response', resp))
+  //   );
+  // }
+  //
 
+
+  findPublishers2(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Config>> {
+    return this.http.get<Config>(
+      'http://localhost:5000/publishers',
+      { observe: 'response',
+        params: new HttpParams()
+          .set('filter', filter)
+          .set('sortOrder', sortOrder)
+          .set('pageNumber', pageNumber.toString())
+          .set('pageSize', pageSize.toString())});
+  }
+
+  // findPublishers2(filter: string, sortOrder: string, pageNumber: number, pageSize: number) : Observable<HttpResponse<Object>>{
+  //
+  //   console.log('findPublishers2 -- getting Publisher in service..'+filter);
+  //   let publisher$ = this.http.get<HttpResponse<Object>>('http://localhost:5000/publishers', {
+  //     // headers : new HttpHeaders().set("", "3"),
+  //     // observe: 'response',
+  //     params: new HttpParams()
+  //       .set('filter', filter)
+  //       .set('sortOrder', sortOrder)
+  //       .set('pageNumber', pageNumber.toString())
+  //       .set('pageSize', pageSize.toString())
+  //   }).pipe(
+  //     tap(_ => console.log('fetched Publisher..xxx.')),
+  //     tap(resp => console.log('response', resp))
+  //     // catchError(this.handleError<Publisher[]>('findPublishers', []))
+  //   );
+  //   console.log('returning  findPublishers2 publisher$--> '+publisher$);
+  //   return publisher$;
+  //   }
 
 
 
   findPublishers(filter: string, sortOrder: string, pageNumber: number, pageSize: number):Observable<Publisher[]> {
-    console.log('getting Publisher in service..')
+    console.log('getting Publisher in service..'+filter);
     let publisher$ = this.http.get<Publisher[]>('http://localhost:5000/publishers', {
       params: new HttpParams()
         .set('filter', filter)

@@ -4,8 +4,9 @@ import {PublishersDataSource} from './publishers.datasource';
 import {ActivatedRoute} from '@angular/router';
 import {PublisherService} from '../services/publisher.service';
 import {MatPaginator, MatSort} from '@angular/material';
-import {merge} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {fromEvent, merge} from 'rxjs';
+import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-publisher-list',
@@ -23,24 +24,48 @@ export class PublisherListComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('inputCode', { static: true }) inputCode: ElementRef;
+
+  @ViewChild('inputDescription', { static: true }) inputDescription: ElementRef;
 
 
   constructor(private route: ActivatedRoute,
               private publisherService: PublisherService) {
-    console.log("Get publishers list 1...");
-
   }
 
   ngOnInit() {
-    console.log("Get publishers list 2...");
 
     this.dataSource = new PublishersDataSource(this.publisherService);
 
     this.dataSource.loadPublishers( '', 'asc', 0, 3);
 
+    this.dataSource.getPublisherCount();
+
     this.publishersCount = 200;
-    // this.dataSource.loadLessons(this.course.id, '', 'asc', 0, 3);
+
+  }
+
+  //ListURL.aspx?FilterField1=column&FilterValue1=value
+  getFilter() {
+
+    let filter = '?';
+    let code = this.inputCode.nativeElement.value;
+    let description = this.inputDescription.nativeElement.value;
+    console.log('code --> '+code );
+    console.log('description --> '+description );
+
+    if (code){
+      filter = filter.concat("code=" , code);
+    }
+    if (description){
+      if(code) {
+        filter = filter.concat("&")
+      }
+      filter = filter.concat("description=", description);
+
+    }
+    return filter;
+
 
   }
 
@@ -48,79 +73,52 @@ export class PublisherListComponent implements OnInit {
     console.log('-------------ngAfterViewInit---------');
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    // fromEvent(this.input.nativeElement,'keyup')
-    //   .pipe(
-    //     debounceTime(150),
-    //     distinctUntilChanged(),
-    //     tap(() => {
-    //       this.paginator.pageIndex = 0;
-    //       console.log('---------fromEvent-----------');
-    //       this.loadLessonsPage();
-    //     })
-    //   )
-    //   .subscribe();
+
+    if (this.inputCode)
+    fromEvent(this.inputCode.nativeElement,'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+
+          let filter = this.getFilter();
+          console.log('filter by code--> '+filter);
+
+          this.paginator.pageIndex = 0;
+          this.dataSource.loadPublishers( filter, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+        })
+      )
+      .subscribe();
+
+    if (this.inputDescription)
+      fromEvent(this.inputDescription.nativeElement,'keyup')
+        .pipe(
+          debounceTime(150),
+          distinctUntilChanged(),
+          tap(() => {
+
+            let filter = this.getFilter();
+            console.log('filter by description--> '+filter);
+
+            this.paginator.pageIndex = 0;
+            this.dataSource.loadPublishers( filter, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+          })
+        )
+        .subscribe();
+
 
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => {
-          console.log('pagination, this.sort.sortChange: '+this.sort.sortChange);
-          console.log('pagination, this.sort.direction: '+this.sort.direction);
-          // console.log('pagination, this.paginator.sortChange: '+this.paginator.page);
-          // console.log('this.input.nativeElement.value: '+this.input.nativeElement.value);
-          console.log('this.sort.direction: '+this.sort.direction);
-          console.log('this.paginator.pageIndex: '+this.paginator.pageIndex);
-          console.log('this.paginator.pageSize: '+this.paginator.pageSize);
+          let filter = this.getFilter();
+          console.log('paginating away--> '+filter);
 
-          // this.input.nativeElement.value,
-          //   this.sort.direction,
-          //   this.paginator.pageIndex,
-          //   this.paginator.pageSize);
-          //
-
-          this.dataSource.loadPublishers( '', this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+          this.dataSource.loadPublishers( filter, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
         })
       )
       .subscribe();
 
   }
-
-  // loadLessonsPage() {
-  //   console.log('------------loadLessonsPage---------');
-  //
-  //   this.dataSource.loadLessons(
-  //     this.course.id,
-  //     this.input.nativeElement.value,
-  //     this.sort.direction,
-  //     this.paginator.pageIndex,
-  //     this.paginator.pageSize);
-  // }
-  //
-  // ngAfterViewInit() {
-  //   console.log('-------------ngAfterViewInit---------');
-  //   this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-  //
-  //   fromEvent(this.input.nativeElement,'keyup')
-  //     .pipe(
-  //       debounceTime(150),
-  //       distinctUntilChanged(),
-  //       tap(() => {
-  //         this.paginator.pageIndex = 0;
-  //         console.log('---------fromEvent-----------');
-  //         this.loadLessonsPage();
-  //       })
-  //     )
-  //     .subscribe();
-  //
-  //   merge(this.sort.sortChange, this.paginator.page)
-  //     .pipe(
-  //       tap(() => {
-  //         console.log('---------mergex-----------');
-  //         this.loadLessonsPage();
-  //       })
-  //     )
-  //     .subscribe();
-  //
-  // }
 
 
 }
