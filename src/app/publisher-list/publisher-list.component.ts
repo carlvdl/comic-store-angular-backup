@@ -35,13 +35,10 @@ export class PublisherListComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log('ngOnInit...');
     this.dataSource = new PublishersDataSource(this.publisherService);
 
     this.dataSource.loadPublishers( '', 'asc', 0, 3);
-
-    this.dataSource.getPublisherCount();
-
-    this.publishersCount = 200;
 
   }
 
