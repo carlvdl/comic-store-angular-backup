@@ -3,7 +3,7 @@
 
   <div>
     <mat-form-field>
-        <input matInput placeholder="Search by code" #inputCode>
+      <input matInput placeholder="Search by code" #inputCode>
     </mat-form-field>
 
     <mat-form-field>
@@ -28,7 +28,12 @@
 
       <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
 
-      <mat-cell *matCellDef="let publisher">{{publisher.code}}</mat-cell>
+
+      <mat-cell *matCellDef="let publisher">
+        <a routerLink="/publisher/{{publisher.id}}">
+          {{publisher.code}}
+        </a>
+      </mat-cell>
 
     </ng-container>
 
