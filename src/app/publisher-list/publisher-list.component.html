@@ -1,16 +1,14 @@
 <p>publisher-list works!</p>
 <div>
 
-  <div>
-    <mat-form-field>
-      <input matInput placeholder="Search by code" #inputCode>
-    </mat-form-field>
 
-    <mat-form-field>
+
+  <form>
+    <div class="form-group form-inline">
+      <input class="form-control ml-2" placeholder="Search by code" #inputCode>
       <input matInput placeholder="Search by description" #inputDescription>
-    </mat-form-field>
-
-  </div>
+    </div>
+  </form>
 
 
   <div class="spinner-container" *ngIf="dataSource.loading$ | async">
@@ -20,13 +18,13 @@
   </div>
 
 
-  <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"
+  <mat-table class="table table-striped" [dataSource]="dataSource"
              matSort matSortActive="seqNo" matSortDirection="asc" matSortDisableClear>
 
 
     <ng-container matColumnDef="code">
 
-      <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
 
 
       <mat-cell *matCellDef="let publisher">

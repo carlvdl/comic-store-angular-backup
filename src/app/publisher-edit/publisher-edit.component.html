@@ -1,25 +1,35 @@
 <div class="jumbotron">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <h3>Angular 7 Reactive Form Validation</h3>
-        <form [formGroup]="publisherForm" (ngSubmit)="onSubmit()">
+  <div class="container" *ngIf="publisher">
+    <div class="col-md-6 offset-md-3" [hidden]="submitted">
+      <h1>User Form</h1>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
 
-          <div class="form-group">
-            <label>Code</label>
-            <input type="text" formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }" />
+        <div class="form-group">
+          <label for="code">Name</label>
+          <input type="text" class="form-control" id="code" required [(ngModel)]="publisher.code" name="code"
+                 #code="ngModel">
+          <div [hidden]="code.valid || code.pristine"
+               class="alert alert-danger">
+            code is required
           </div>
+        </div>
 
-          <div class="form-group">
-            <label>Description</label>
-            <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+        <div class="form-group">
+          <label for="description">Name</label>
+          <input type="text" class="form-control" id="description" required [(ngModel)]="publisher.description" name="description"
+                 #description="ngModel">
+          <div [hidden]="description.valid || description.pristine"
+               class="alert alert-danger">
+            code is required
           </div>
+        </div>
 
-          <div class="form-group">
-            <button class="btn btn-primary">Add</button>
-          </div>
-        </form>
-      </div>
+        <div class="form-group">
+          <button class="btn btn-primary">Update</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+
