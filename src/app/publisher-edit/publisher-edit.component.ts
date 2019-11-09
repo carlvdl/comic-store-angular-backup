@@ -31,6 +31,10 @@ export class PublisherEditComponent implements OnInit {
 
   ngOnInit() {
 
+    this.publisherForm = this.formBuilder.group({
+      code: ['', [Validators.required, Validators.minLength(2)]],
+      description: ['', [Validators.required, Validators.minLength(3)]]
+    });
     this.returnUrl = 'publishers';
     console.log('PublisherComponent...');
     const id = +this.route.snapshot.paramMap.get('id');
@@ -44,10 +48,7 @@ export class PublisherEditComponent implements OnInit {
     }else{
 
       console.log("Proceed to add new publisher...");
-      this.publisherForm = this.formBuilder.group({
-        code: ['', [Validators.required, Validators.minLength(2)]],
-        description: ['', [Validators.required, Validators.minLength(3)]]
-      });
+
       this.publisher = new Publisher();
       this.addNew = true;
     }
@@ -78,10 +79,10 @@ export class PublisherEditComponent implements OnInit {
     // stop here if form is invalid
     console.log('validating...1..');
     console.log(this.publisherForm);
-    if (this.publisherForm.invalid) {
-      console.log('validating...2..');
-      return;
-    }
+        // if (this.publisherForm.invalid) {
+        //   console.log('validating...2..');
+        //   return;
+        // }
     console.log('validating...3..');
 
 
