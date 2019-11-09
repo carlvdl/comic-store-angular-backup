@@ -1,26 +1,28 @@
 <div class="jumbotron">
-  <div class="container" *ngIf="publisher">
+  <div class="container" *ngIf="publisher || addNew">
     <div class="col-md-6 offset-md-3" [hidden]="submitted">
-      <h1>User Form</h1>
+      <h1>Publisher</h1>
       <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
 
         <div class="form-group">
           <label for="code">Name</label>
           <input type="text" class="form-control" id="code" required [(ngModel)]="publisher.code" name="code"
+                 required minlength="3"
                  #code="ngModel">
           <div [hidden]="code.valid || code.pristine"
                class="alert alert-danger">
-            code is required
+            code of min length 3 is required
           </div>
         </div>
 
         <div class="form-group">
           <label for="description">Name</label>
           <input type="text" class="form-control" id="description" required [(ngModel)]="publisher.description" name="description"
+                 required minlength="5  "
                  #description="ngModel">
           <div [hidden]="description.valid || description.pristine"
                class="alert alert-danger">
-            code is required
+            description of min length 5 is required
           </div>
         </div>
 

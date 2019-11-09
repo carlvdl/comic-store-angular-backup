@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {User} from '../models/user';
+// import {User} from '../models/user';
 import {Publisher} from '../models/publisher';
 import {catchError, map, tap} from 'rxjs/operators';
 import {Config} from '../models/config';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +13,19 @@ import {Config} from '../models/config';
 export class PublisherService {
 
   constructor(private http: HttpClient) {
+    console.log(environment.apiUrl);
   }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-
-  updatePublisher(publisher: Publisher) : Observable<Publisher> {
-      let url = 'http://localhost:5000/publishers/'+(publisher.id).toString();
-      return this.http.put(url, publisher, this.httpOptions).pipe(
-        tap(_ => this.log(`updated publisher id=${publisher.id}`)),
-        catchError(this.handleError<any>('updatePublisher'))
-      );
-  }
-
-  addPublisher(publisherInput: Publisher) {
+  createPublisher(publisherInput: Publisher) {
+    console.log('%% adding a publisher %%');
     let code = publisherInput.code;
     let description = publisherInput.description;
 
-    console.log('adding a publisher..');
-    return this.http.post<any>(`http://localhost:5000/publishers`, {code, description})
+    return this.http.post<any>(environment.apiUrl+'/publishers', {code, description})
       .pipe(map(publisher => {
         console.log('publisher result--->');
         console.log(publisher);
@@ -47,6 +40,31 @@ export class PublisherService {
       }));
   }
 
+  //edit publisher
+  updatePublisher(publisher: Publisher) : Observable<Publisher> {
+    console.log('%% updating a publisher %%');
+    let url = 'http://localhost:5000/publishers/'+(publisher.id).toString();
+    return this.http.put(url, publisher, this.httpOptions).pipe(
+      tap(_ => this.log(`updated publisher id=${publisher.id}`)),
+      catchError(this.handleError<any>('updatePublisher'))
+    );
+  }
+
+
+  getPublisher(id: number): Observable<Publisher> {
+    console.log('gettng Publisher by id ');
+    console.log(id);
+    const url = 'http://localhost:5000/publishers/'+id;
+    console.log(url);
+
+    return this.http.get<Publisher>(url).pipe(
+      tap(_ => this.log ('fetched publisher id=${id}')),
+      catchError(this.handleError<Publisher>('getPublisher id=${id}'))
+    );
+  }
+
+
+
 
   findPublishers(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Publisher[]>> {
     return this.http.get<Publisher[]>(
@@ -60,6 +78,8 @@ export class PublisherService {
           .set('pageSize', pageSize.toString())
       });
   }
+
+
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -79,17 +99,6 @@ export class PublisherService {
     console.log('message: '+message);
   }
 
-  //edit publisher
-  getPublisher(id: number): Observable<Publisher> {
-    console.log('gettng Publisher by id ');
-    console.log(id);
-    const url = 'http://localhost:5000/publishers/'+id;
-    console.log(url);
 
-    return this.http.get<Publisher>(url).pipe(
-      tap(_ => this.log ('fetched publisher id=${id}')),
-      catchError(this.handleError<Publisher>('getPublisher id=${id}'))
-    );
-  }
 
 }

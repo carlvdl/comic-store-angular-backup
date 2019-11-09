@@ -19,6 +19,7 @@ export class PublisherEditComponent implements OnInit {
   loading = false;
   returnUrl: string;
   publisher: Publisher;
+  addNew:boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,45 +30,40 @@ export class PublisherEditComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.returnUrl = 'publishers';
     console.log('PublisherComponent...');
+    const id = +this.route.snapshot.paramMap.get('id');
+    console.log('id--> '+id);
+    if (id > 0){
 
-    this.getPublisher();
+      console.log("Proceed to edit publisher...");
+      this.getPublisher(id);
+      this.addNew = false;
 
-    this.publisherForm = this.formBuilder.group({
-      code: ['', [Validators.required, Validators.minLength(2)]],
-      description: ['', [Validators.required, Validators.minLength(3)]]
-    });
+    }else{
 
-    // this.returnUrl = 'dashboard'
+      console.log("Proceed to add new publisher...");
+      this.publisherForm = this.formBuilder.group({
+        code: ['', [Validators.required, Validators.minLength(2)]],
+        description: ['', [Validators.required, Validators.minLength(3)]]
+      });
+      this.publisher = new Publisher();
+      this.addNew = true;
+    }
+
+
+
   }
 
 
-  getPublisher(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  getPublisher(id): void {
     this.publisherService.getPublisher(id)
       .subscribe(publisher => {
         this.publisher = publisher;
-        console.log('publisher-->' + this.publisher);
-        console.log('We got a publisher, so just fucking work..');
+        console.log('got a publisher-->' + this.publisher);
       });
   }
-
-
-  // getPublisher(): void {
-  //   const id = +this.route.snapshot.paramMap.get('id');
-  //   this.publisherService.getPublisher(id)
-  //     .subscribe(publisher => this.publisher = publisher);
-  // }
-
-  // ngOnInit(): void {
-  //   this.getHero();
-  // }
-  //
-  // getHero(): void {
-  //   const id = +this.route.snapshot.paramMap.get('id');
-  //   this.heroService.getHero(id)
-  //     .subscribe(hero => this.hero = hero);
-  // }
 
   // convenience getter nfor easy access to form fields
   get f() {
@@ -77,14 +73,17 @@ export class PublisherEditComponent implements OnInit {
 
   onSubmit() {
     console.log('onSubmit');
-
-
     this.submitted = true;
 
     // stop here if form is invalid
-    // if (this.publisherForm.invalid) {
-    //   return;
-    // }
+    console.log('validating...1..');
+    console.log(this.publisherForm);
+    if (this.publisherForm.invalid) {
+      console.log('validating...2..');
+      return;
+    }
+    console.log('validating...3..');
+
 
 
     let publisherId = this.publisher.id;
@@ -93,23 +92,18 @@ export class PublisherEditComponent implements OnInit {
     if (publisherId) {
       console.log('editing...');
       this.publisherService.updatePublisher(this.publisher)
-        .subscribe(() =>
+        .subscribe(() =>{
           // this.location.back()
-          console.log('Updating...')
-        );
+          console.log('Updating...');
+          this.router.navigate([this.returnUrl]);
+        }
+    );
 
     } else {
+
       console.log('adding...');
-      let code = this.publisherForm.value.code;
-      let description = this.publisherForm.value.description;
-
       this.loading = true;
-
-      let publisher = new Publisher();
-      publisher.code = code;
-      publisher.description = description;
-
-      this.publisherService.addPublisher(publisher)
+      this.publisherService.createPublisher(this.publisher)
         .pipe(first())
         .subscribe(
           data => {
