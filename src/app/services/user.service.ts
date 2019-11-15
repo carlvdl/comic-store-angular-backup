@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {User} from "../models/user";
-import {BehaviorSubject, config, Observable, of} from 'rxjs';
+import {BehaviorSubject, config, Observable, of, Subject} from 'rxjs';
 import {catchError, tap} from "rxjs/operators";
 import {DecimalPipe} from '@angular/common';
 import {Publisher} from '../models/publisher';
@@ -21,10 +21,39 @@ export class UserService {
 
   users$ = new BehaviorSubject<User[]>([]);
   total$ = new BehaviorSubject<number>(0);
+  private _search$ = new Subject<void>();
 
-  findPublishers(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Publisher[]>> {
-    return this.http.get<Publisher[]>(
-      'http://localhost:5000/publishers',
+  constructor(private pipe: DecimalPipe,
+              private http: HttpClient) {
+    this.findUsers('','',0,3).subscribe(response =>{
+      this.users$.next(response.body);
+      // this.total$ = parseInt(response.headers.get('x-total-count'));
+    })
+
+  }
+
+  register(user: User) {
+    console.log('user service register...'+user);
+    return this.http.post(`http://localhost:5000/users/register`, user);
+  }
+
+
+//
+//   this.publisherService.findPublishers(filter, sortDirection, pageIndex, pageSize).subscribe(response => {
+//   this.publishersSubject.next(response.body);
+//   this.publishersCount = parseInt(response.headers.get('x-total-count'));
+//   console.log('PublishersCount...'+this.publishersCount);
+//   // this.setPublishersCount(this.publishersCount);
+//   this.loadingSubject.next(false);
+// });
+//
+  // getTotals() {
+  //   return undefined;
+  // }
+  //
+  findUsers(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<User[]>> {
+    return this.http.get<User[]>(
+      'http://localhost:5000/users',
       {
         observe: 'response',
         params: new HttpParams()
@@ -35,68 +64,6 @@ export class UserService {
       });
   }
 
-  //parseInt(response.headers.get('x-total-count'));
-  //filter, sortDirection, pageIndex, pageSize
-  //  findPublishers(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Publisher[]>> {
-  // getUsers(filter: string, sortOrder: string, pageNumber: number, pageSize: number):Observable<HttpResponse<User[]>> {
-  //   console.log('getting users..')
-  //   let users$ = this.http.get<HttpResponse<User[]>>('http://localhost:5000/users')
-  //       .pipe(
-  //         tap(_ => console.log('fetched users...')))
-  //       .subscribe(
-  //         result => {
-  //             this._users$.next(result.body);
-  //             this._total$.next(parseInt(result.headers.get('x-total-count')));
-  //           }
-  //       );
-  //   console.log('returning users$--> '+users$);
-  //   return users$;
-  //   }
-
-
-
-  constructor(private pipe: DecimalPipe,
-              private http: HttpClient) {
-    let users$ = this.http.get<HttpResponse<User[]>>(
-      'http://localhost:5000/users',
-      {
-        observe: 'response',
-        params: new HttpParams()
-          .set('filter', '')
-          .set('sortOrder', '')
-          .set('pageNumber', '0')
-          .set('pageSize', '3')
-      })
-      .pipe(
-        tap(_ => console.log('fetched users...')))
-      .subscribe(
-        result => {
-          this.users$.next(result.body.body);
-          this.total$.next(parseInt(result.headers.get('x-total-count')));
-        }
-      );
-  }
-
-  register(user: User) {
-    console.log('user service register...'+user);
-    return this.http.post(`http://localhost:5000/users/register`, user);
-  }
-
-
-  // getTotals() {
-  //   return undefined;
-  // }
-  //
-  // getUsers():Observable<User[]> {
-  //   console.log('getting users..')
-  //   let users$ = this.http.get<User[]>('http://localhost:5000/users')
-  //       .pipe(
-  //         tap(_ => console.log('fetched users...')),
-  //         catchError(this.handleError<User[]>('getHeroes', []))
-  //       );
-  //   console.log('returning users$--> '+users$);
-  //   return users$;
-  //   }
 
 
   private handleError<T> (operation = 'operation', result?: T) {

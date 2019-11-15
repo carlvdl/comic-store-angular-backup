@@ -13,15 +13,13 @@ import {HttpResponse} from '@angular/common/http';
 })
 export class UserListComponent implements OnInit {
 
-  response$: Observable<HttpResponse<User[]>>;
+  // countries$: Observable<Country[]>;
+  // total$: Observable<number>;
+  //
+  // filter = new FormControl('');
   users$: Observable<User[]>;
-  // users: User[];
-  filter = new FormControl('');
   total$: Observable<number>;
 
-
-  // this.publishersSubject.next(response.body);
-  // this.publishersCount = parseInt(response.headers.get('x-total-count'));
 
   constructor(
     private pipe: DecimalPipe,
@@ -31,27 +29,11 @@ export class UserListComponent implements OnInit {
     this.total$ = userService.total$;
     console.log('users$--> '+this.users$.subscribe());
 
-    // this.response$ = userService.getUsers('','',0,3,);
-    // userService.getUsers('','',0,3).subscribe(
-    //   response => {
-    //     this.users$ = response.body;
-    //     this.publishersCount = parseInt(response.headers.get('x-total-count'));
-    //     console.log('PublishersCount...'+this.publishersCount);
-    //     // this.setPublishersCount(this.publishersCount);
-    //     this.loadingSubject.next(false);
-    //   });
-    // // this.total$ = userService.getTotals();
-
   }
 
 
 
-
-  // this.countries$ = service.countries$;
-  // this.total$ = service.total$;
-
   ngOnInit() {
-    // this.getUsers();
   }
 
   // getUsers(): void {

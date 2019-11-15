@@ -7,6 +7,7 @@
 </form>
 
 
+{{users$}}
 <table class="table table-striped">
   <thead>
   <tr>
@@ -22,19 +23,19 @@
   </thead>
   <tbody>
 
-  <tr *ngFor="let user of users$ | async  index as i">
+  <tr *ngFor="let user of users$ | async  ">
     <!--<th scope="row">{{ i + 1 }}</th>-->
     <td>
       <ngb-highlight [result]="user.id"></ngb-highlight>
     </td>
     <td>
       <a routerLink="/user/{{user.id}}">
-        <ngb-highlight [result]="user.userName" [term]="filter.value"></ngb-highlight>
+        <ngb-highlight [result]="user.userName" ></ngb-highlight>
       </a>
     </td>
-    <td><ngb-highlight [result]="user.email" [term]="filter.value"></ngb-highlight></td>
-    <td><ngb-highlight [result]="user.firstName" [term]="filter.value"></ngb-highlight></td>
-    <td><ngb-highlight [result]="user.lastName" [term]="filter.value"></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.email" ></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.firstName" ></ngb-highlight></td>
+    <td><ngb-highlight [result]="user.lastName" ></ngb-highlight></td>
     <td><ngb-highlight [result]="user.phoneNumber"></ngb-highlight></td>
     <td><ngb-highlight [result]="user.isAuthenticated" ></ngb-highlight></td>
     <td><ngb-highlight [result]="user.dateAdded" ></ngb-highlight></td>
