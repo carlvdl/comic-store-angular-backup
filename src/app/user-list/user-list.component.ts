@@ -4,6 +4,7 @@ import {FormControl} from "@angular/forms";
 import {DecimalPipe} from "@angular/common";
 import {User} from "../models/user";
 import {UserService} from "../services/user.service";
+import {HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-user-list',
@@ -12,26 +13,54 @@ import {UserService} from "../services/user.service";
 })
 export class UserListComponent implements OnInit {
 
-  // users$: Observable<User[]>;
-  users: User[];
+  response$: Observable<HttpResponse<User[]>>;
+  users$: Observable<User[]>;
+  // users: User[];
   filter = new FormControl('');
+  total$: Observable<number>;
+
+
+  // this.publishersSubject.next(response.body);
+  // this.publishersCount = parseInt(response.headers.get('x-total-count'));
 
   constructor(
     private pipe: DecimalPipe,
     private userService: UserService) {
+
+    this.users$ = userService.users$;
+    this.total$ = userService.total$;
+    console.log('users$--> '+this.users$.subscribe());
+
+    // this.response$ = userService.getUsers('','',0,3,);
+    // userService.getUsers('','',0,3).subscribe(
+    //   response => {
+    //     this.users$ = response.body;
+    //     this.publishersCount = parseInt(response.headers.get('x-total-count'));
+    //     console.log('PublishersCount...'+this.publishersCount);
+    //     // this.setPublishersCount(this.publishersCount);
+    //     this.loadingSubject.next(false);
+    //   });
+    // // this.total$ = userService.getTotals();
+
   }
+
+
+
+
+  // this.countries$ = service.countries$;
+  // this.total$ = service.total$;
 
   ngOnInit() {
-    this.getUsers();
+    // this.getUsers();
   }
 
-  getUsers(): void {
-    this.userService.getUsers()
-      .subscribe(users => {
-        this.users = users
-        console.log(this.users);
-      });
-  }
+  // getUsers(): void {
+  //   this.userService.getUsers()
+  //     .subscribe(users => {
+  //       this.users = users
+  //       console.log(this.users);
+  //     });
+  // }
 
 
 }
