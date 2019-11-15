@@ -1,48 +1,33 @@
-<p>publisher-list works!</p>
 <div>
-
-
 
   <form>
     <div class="form-group form-inline">
       <input class="form-control ml-2" placeholder="Search by code" #inputCode>
-      <input matInput placeholder="Search by description" #inputDescription>
+      <input class="form-control ml-2"   placeholder="Search by description" #inputDescription>
     </div>
   </form>
 
 
   <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-
     <mat-spinner></mat-spinner>
-
   </div>
 
 
   <mat-table class="table table-striped" [dataSource]="dataSource"
              matSort matSortActive="seqNo" matSortDirection="asc" matSortDisableClear>
-
-
     <ng-container matColumnDef="code">
-
       <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
-
-
       <mat-cell *matCellDef="let publisher">
         <a routerLink="/publisher/{{publisher.id}}">
           {{publisher.code}}
         </a>
       </mat-cell>
-
     </ng-container>
 
-
     <ng-container matColumnDef="description">
-
       <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-
       <mat-cell class="description-cell"
                 *matCellDef="let publisher">{{publisher.description}}</mat-cell>
-
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

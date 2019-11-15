@@ -22,7 +22,7 @@
   </thead>
   <tbody>
 
-  <tr *ngFor="let user of users  index as i">
+  <tr *ngFor="let user of users$ | async  index as i">
     <!--<th scope="row">{{ i + 1 }}</th>-->
     <td>
       <ngb-highlight [result]="user.id"></ngb-highlight>
@@ -43,6 +43,17 @@
 </table>
 
 
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+    <option [ngValue]="2">2 items per page</option>
+    <option [ngValue]="4">4 items per page</option>
+    <option [ngValue]="6">6 items per page</option>
+  </select>
+</div>
 
 <div  class="d-inline-block" >
   <button type="button" class="btn btn-primary" routerLink="/user"  value="Login">

@@ -26,21 +26,15 @@ export class PublisherEditComponent implements OnInit {
     public publisherService: PublisherService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
 
-    this.publisherForm = this.formBuilder.group({
-      code: ['', [Validators.required, Validators.minLength(2)]],
-      description: ['', [Validators.required, Validators.minLength(3)]]
-    });
     this.returnUrl = 'publishers';
     console.log('PublisherComponent...');
-    const id = +this.route.snapshot.paramMap.get('id');
-    console.log('id--> '+id);
-    if (id > 0){
 
+    const id = +this.route.snapshot.paramMap.get('id');
+    if (id > 0){
       console.log("Proceed to edit publisher...");
       this.getPublisher(id);
       this.addNew = false;
@@ -48,15 +42,11 @@ export class PublisherEditComponent implements OnInit {
     }else{
 
       console.log("Proceed to add new publisher...");
-
       this.publisher = new Publisher();
       this.addNew = true;
     }
 
-
-
   }
-
 
   getPublisher(id): void {
     this.publisherService.getPublisher(id)
@@ -76,16 +66,7 @@ export class PublisherEditComponent implements OnInit {
     console.log('onSubmit');
     this.submitted = true;
 
-    // stop here if form is invalid
-    console.log('validating...1..');
     console.log(this.publisherForm);
-        // if (this.publisherForm.invalid) {
-        //   console.log('validating...2..');
-        //   return;
-        // }
-    console.log('validating...3..');
-
-
 
     let publisherId = this.publisher.id;
     console.log('publisherId--> ' + publisherId);
@@ -94,7 +75,6 @@ export class PublisherEditComponent implements OnInit {
       console.log('editing...');
       this.publisherService.updatePublisher(this.publisher)
         .subscribe(() =>{
-          // this.location.back()
           console.log('Updating...');
           this.router.navigate([this.returnUrl]);
         }

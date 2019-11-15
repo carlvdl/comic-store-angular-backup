@@ -13,14 +13,10 @@ import {Observable, of} from "rxjs";
 })
 export class UserEditComponent implements OnInit {
 
-
-  //https://angular.io/guide/reactive-forms
-  // https://www.techiediaries.com/angular-tutorial-reactive-forms/
   user: User;
+  addingNew:boolean;
   submitted = false;
-
-
-
+  returnUrl: string;
 
   constructor(
     private route: ActivatedRoute,
