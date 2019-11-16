@@ -25,10 +25,10 @@ export class UserService {
 
   constructor(private pipe: DecimalPipe,
               private http: HttpClient) {
-    this.findUsers('','',0,3).subscribe(response =>{
-      this.users$.next(response.body);
-      // this.total$ = parseInt(response.headers.get('x-total-count'));
-    })
+      this.findUsers('','',0,3).subscribe(response =>{
+        this.users$.next(response.body);
+        // this.total$ = parseInt(response.headers.get('x-total-count'));
+      })
 
   }
 

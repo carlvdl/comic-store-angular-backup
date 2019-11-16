@@ -33,11 +33,13 @@ import { RoleEditComponent } from './role-edit/role-edit.component';
 // import {DecimalPipe} from "@angular/common";
 import {  MatPaginatorModule, MatProgressSpinnerModule,
   MatSortModule, MatTableModule } from "@angular/material";
+// import { SortableDirective } from './sortable.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserLoginComponent,
+    // SortableDirective
     UserRegisterComponent,
     GradingListComponent,
     UserListComponent,
