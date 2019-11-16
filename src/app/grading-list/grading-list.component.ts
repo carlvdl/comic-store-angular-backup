@@ -22,7 +22,7 @@ export class GradingListComponent implements OnInit {
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(public gradingService: GradingService) {
-    this.gradings$ = gradingService._gradings$;
+    this.gradings$ = gradingService.gradings$;
     this.total$ = gradingService.total$;
   }
 

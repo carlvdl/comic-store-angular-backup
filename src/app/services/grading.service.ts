@@ -50,7 +50,7 @@ function matches(grading: Grading, term: string, pipe: PipeTransform) {
 export class GradingService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  _gradings$ = new BehaviorSubject<Grading[]>([]);
+  private _gradings$ = new BehaviorSubject<Grading[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
   private _state: State = {
@@ -60,40 +60,19 @@ export class GradingService {
     sortColumn: '',
     sortDirection: ''
   };
-
-  constructor(private http:HttpClient, private pipe: DecimalPipe){
-    console.log('------------1--------');
-    this.findGradings('','',0,3).subscribe(response =>{
-      this._gradings$.next(response.body);
-      // this.total$ = parseInt(response.headers.get('x-total-count'));
-    })
-
-    // this.findGradings('','',0,3).subscribe(response =>{
-    //   this._gradings$.next(response.body);
-    //   console.log('===x===');
-    //   console.log('this._gradings$--> ');
-    //   console.log(this._gradings$);
-    //
-    //   // this.total$ = parseInt(response.headers.get('x-total-count'));
-    // })
-  }
-
-  // constructor(private pipe: DecimalPipe, private http: HttpClient) {
-  //   this._search$.pipe(
-  //     tap(() => this._loading$.next(true)),
-  //     debounceTime(200),
-  //     switchMap(() => this._search()),
-  //     delay(200),
-  //     tap(() => this._loading$.next(false))
-  //   ).subscribe(result => {
-  //     this._gradings$.next(result.gradings);
-  //     this._total$.next(result.total);
-  //   });
   //
-  //   this._search$.next();
+  // constructor(private http:HttpClient, private pipe: DecimalPipe){
+  //   console.log('------------1--------');
+  //   this.findGradings('','',0,3).subscribe(response =>{
+  //     this._gradings$.next(response.body);
+  //     this._total$.next(parseInt(response.headers.get('x-total-count')));
+  //   })
   // }
 
-  // get gradings$() { return this._gradings$.asObservable(); }
+
+
+
+  get gradings$() { return this._gradings$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -123,6 +102,33 @@ export class GradingService {
           .set('pageSize', pageSize.toString())
       });
   }
+
+  constructor(private pipe: DecimalPipe, private http: HttpClient) {
+    this._search$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._search()),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      this._gradings$.next(result.gradings);
+      this._total$.next(result.total);
+      console.log('------------v1-------------');
+      console.log(this._gradings$);
+      console.log('------------v2------------');
+    });
+
+    this._search$.next();
+  }
+
+  //
+  // constructor(private http:HttpClient, private pipe: DecimalPipe){
+  //   console.log('------------1--------');
+  //   this.findGradings('','',0,3).subscribe(response =>{
+  //     this._gradings$.next(response.body);
+  //     this._total$.next(parseInt(response.headers.get('x-total-count')));
+  //   })
+  // }
 
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
