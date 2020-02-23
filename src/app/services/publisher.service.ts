@@ -4,7 +4,6 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 // import {User} from '../models/user';
 import {Publisher} from '../models/publisher';
 import {catchError, map, tap} from 'rxjs/operators';
-import {Config} from '../models/config';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -24,10 +23,19 @@ export class PublisherService {
     console.log('%% adding a publisher %%');
     let code = publisherInput.code;
     let description = publisherInput.description;
+    let imageUrl = publisherInput.imageUrl;
 
-    return this.http.post<any>(environment.apiUrl+'/publishers', {code, description})
+    console.log('code--> '+code);
+    console.log('description--> '+description);
+    console.log('imageUrl--> '+imageUrl);
+
+    return this.http.post<any>(environment.apiUrl+'/publishers', {code, description, imageUrl})
       .pipe(map(publisher => {
         console.log('publisher result--->');
+        console.log(publisher);
+        console.log('--> code--> '+code);
+        console.log('--> description--> '+description);
+        console.log('--> imageUrl--> '+imageUrl);
         console.log(publisher);
 
         // login successful if there's a jwt token in the response

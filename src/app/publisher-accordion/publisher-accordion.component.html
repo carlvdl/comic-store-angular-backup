@@ -1,0 +1,20 @@
+<p>publisher-accordion works!</p>
+
+<ngb-accordion  #myaccordion="ngbAccordion"
+                closeOthers="true"
+                (panelChange)="handlePanelChangeEvent($event)">
+  <div class="row" *ngFor="let publisher of publishers; let i = index;">
+
+    <ngb-panel  title='{{publisher.description}}'
+                [id]="''+i" (click)="handlePanelClickEvent($event)">
+      <ng-template ngbPanelContent >
+
+        <div class="col-6">
+          <label>{{publisher.id}}</label>
+          <img src="{{publisher.imageUrl}}">
+        </div>
+
+      </ng-template>
+    </ngb-panel>
+  </div>
+</ngb-accordion>

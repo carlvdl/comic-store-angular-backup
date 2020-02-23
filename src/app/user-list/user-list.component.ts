@@ -13,10 +13,7 @@ import {HttpResponse} from '@angular/common/http';
 })
 export class UserListComponent implements OnInit {
 
-  // countries$: Observable<Country[]>;
-  // total$: Observable<number>;
-  //
-  // filter = new FormControl('');
+
   users$: Observable<User[]>;
   total$: Observable<number>;
 
@@ -24,25 +21,31 @@ export class UserListComponent implements OnInit {
   constructor(
     private pipe: DecimalPipe,
     private userService: UserService) {
-
-    this.users$ = userService.users$;
-    this.total$ = userService.total$;
-    console.log('users$--> '+this.users$.subscribe());
-
+    console.log('constructor--> ');
+    this.getUsers(0);
   }
-
 
 
   ngOnInit() {
   }
 
-  // getUsers(): void {
-  //   this.userService.getUsers()
-  //     .subscribe(users => {
-  //       this.users = users
-  //       console.log(this.users);
-  //     });
-  // }
+  ngAfterViewInit() {
+  }
 
 
+  getUsers(pageNumber: number): void {
+    this.userService.findUsers( '', 'asc', pageNumber, 3).subscribe(response =>{
+      console.log("getting users for page ")
+      console.log(pageNumber)
+      this.users$ = this.userService.users$;
+      this.total$ = this.userService.total$;
+    })
+  }
+
+
+  filterOffsetPage(pageNumber: number) {
+    console.log('pageNumber');
+    console.log(pageNumber-1);
+    this.getUsers(pageNumber-1)
+  }
 }

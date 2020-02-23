@@ -32,9 +32,12 @@ export class UserEditComponent implements OnInit {
 
 
   getUser(): void {
+    console.log('getting a user by id');
     const id = +this.route.snapshot.paramMap.get('id');
+    console.log('getting a user by id of '+id);
     this.userService.getUser(id)
       .subscribe(user => {
+        console.log('user-->'+user);
         this.user = user;
         console.log("user-->"+this.user.email);
         console.log("user-->"+this.user.password);

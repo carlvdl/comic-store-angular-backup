@@ -5,7 +5,6 @@ import {Grading} from '../models/grading';
 import {Observable} from 'rxjs';
 import {NgbdSortableHeader, SortEvent} from '../sortable.directive';
 
-
 @Component( {
     selector: 'app-grading-list',
     templateUrl: './grading-list.component.html',

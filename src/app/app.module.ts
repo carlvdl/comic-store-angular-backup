@@ -33,6 +33,7 @@ import { RoleEditComponent } from './role-edit/role-edit.component';
 // import {DecimalPipe} from "@angular/common";
 import {  MatPaginatorModule, MatProgressSpinnerModule,
   MatSortModule, MatTableModule } from "@angular/material";
+import { PublisherAccordionComponent } from './publisher-accordion/publisher-accordion.component';
 // import { SortableDirective } from './sortable.directive';
 
 @NgModule({
@@ -49,7 +50,8 @@ import {  MatPaginatorModule, MatProgressSpinnerModule,
     TitleListComponent,
     TitleEditComponent,
     RoleListComponent,
-    RoleEditComponent
+    RoleEditComponent,
+    PublisherAccordionComponent
   ],
   imports: [
     NgbModule,

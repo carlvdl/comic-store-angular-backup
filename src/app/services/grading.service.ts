@@ -12,10 +12,6 @@ import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {User} from '../models/user';
 // import {SortDirection} from './sortable.directive';
 
-interface SearchResult {
-  gradings: Grading[];
-  total: number;
-}
 
 interface State {
   page: number;
@@ -45,6 +41,7 @@ function matches(grading: Grading, term: string, pipe: PipeTransform) {
     || pipe.transform(grading.code).includes(term)
     || pipe.transform(grading.description).includes(term);
 }
+
 
 @Injectable({providedIn: 'root'})
 export class GradingService {
@@ -107,21 +104,22 @@ export class GradingService {
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
-      switchMap(() => this._search()),
+      // switchMap(() => this._search()),
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._gradings$.next(result.gradings);
-      this._total$.next(result.total);
-      console.log('------------v1-------------');
-      console.log(this._gradings$);
+      // this._gradings$.next(result.gradings as Grading[]);
+      // this._total$.next(result.total);
+      // console.log('------------v1-------------');
+      // console.log(this._gradings$);
+      // console.log(result.gradings  as Grading[]);
       console.log('------------v2------------');
     });
 
     this._search$.next();
   }
 
-  //
+
   // constructor(private http:HttpClient, private pipe: DecimalPipe){
   //   console.log('------------1--------');
   //   this.findGradings('','',0,3).subscribe(response =>{
@@ -130,30 +128,47 @@ export class GradingService {
   //   })
   // }
 
-  private _search(): Observable<SearchResult> {
-    const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
-    console.log('------------1--------');
-    let gradingsResponse = this.findGradings('','',0,3).subscribe(response =>{
-      this._gradings$.next(response.body);
-      console.log('===x===');
-      console.log('this._gradings$--> ');
-      console.log(this._gradings$);
+//   interface foo {
+//   one: number;
+//   two: string;
+// }
+//   interface SearchResult {
+//   gradings: Grading[];
+//   total: number;
+// }
 
-      // this.total$ = parseInt(response.headers.get('x-total-count'));
-    })
-    console.log('------------2--------');
-
-    // 1. sort
-    // let gradings = sort(COUNTRIES, sortColumn, sortDirection);
-    let gradings = sort(this._gradings$.getValue(), sortColumn, sortDirection);
-
-    // 2. filter
-    gradings = gradings.filter(grading => matches(grading, searchTerm, this.pipe));
-    const total = gradings.length;
-
-    // 3. paginate
-    gradings = gradings.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({gradings, total});
-  }
+// private _search(): Observable<SearchResult> {
+//     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
+//
+//     console.log('------------1--------');
+//     let gradingsResponse = this.findGradings('','',0,3).subscribe(response =>{
+//       this._gradings$.next(response.body);
+//       console.log('===x===');
+//       console.log('this._gradings$--> ');
+//       console.log(this._gradings$);
+//
+//       // this.total$ = parseInt(response.headers.get('x-total-count'));
+//     })
+//     console.log('------------2--------');
+//
+//     // 1. sort
+//     // let gradings = sort(COUNTRIES, sortColumn, sortDirection);
+//     let gradings = sort(this._gradings$.getValue(), sortColumn, sortDirection);
+//
+//     // 2. filter
+//     gradings = gradings.filter(grading => matches(grading, searchTerm, this.pipe));
+//     console.log('gradings-->');
+//     console.log(gradings);
+//
+//     const total = gradings.length;
+//
+//     // 3. paginate
+//     // gradings = gradings.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+//     // return of({gradings, total});
+//
+//     const searchResult: SearchResult = { gradings: gradings, total: total };
+//     return of(searchResult);
+//     // return of({gradings, total});
+//   }
 }

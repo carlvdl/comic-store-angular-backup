@@ -4,30 +4,26 @@ import {User} from "../models/user";
 import {BehaviorSubject, config, Observable, of, Subject} from 'rxjs';
 import {catchError, tap} from "rxjs/operators";
 import {DecimalPipe} from '@angular/common';
-import {Publisher} from '../models/publisher';
-
-
-interface SearchResult {
-  countries: User[];
-  total: number;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  // constructor(private http: HttpClient) { }
-
-  users$ = new BehaviorSubject<User[]>([]);
-  total$ = new BehaviorSubject<number>(0);
+  _users$ = new BehaviorSubject<User[]>([]);
+  _total$ = new BehaviorSubject<number>(0);
   private _search$ = new Subject<void>();
+
+  get users$() { return this._users$.asObservable(); }
+  get total$() { return this._total$.asObservable(); }
 
   constructor(private pipe: DecimalPipe,
               private http: HttpClient) {
-      this.findUsers('','',0,3).subscribe(response =>{
-        this.users$.next(response.body);
-        // this.total$ = parseInt(response.headers.get('x-total-count'));
+    console.log('constructor---');
+
+    this.findUsers('','',0,3).subscribe(response =>{
+        this._users$.next(response.body);
+        this._total$.next(parseInt(response.headers.get('x-total-count')));
       })
 
   }
@@ -37,20 +33,6 @@ export class UserService {
     return this.http.post(`http://localhost:5000/users/register`, user);
   }
 
-
-//
-//   this.publisherService.findPublishers(filter, sortDirection, pageIndex, pageSize).subscribe(response => {
-//   this.publishersSubject.next(response.body);
-//   this.publishersCount = parseInt(response.headers.get('x-total-count'));
-//   console.log('PublishersCount...'+this.publishersCount);
-//   // this.setPublishersCount(this.publishersCount);
-//   this.loadingSubject.next(false);
-// });
-//
-  // getTotals() {
-  //   return undefined;
-  // }
-  //
   findUsers(filter: string, sortOrder: string, pageNumber: number, pageSize: number): Observable<HttpResponse<User[]>> {
     return this.http.get<User[]>(
       'http://localhost:5000/users',
@@ -99,7 +81,7 @@ export class UserService {
     console.log('message: '+message);
   }
 
-  // const url = `${this.heroesUrl}/${id}`;
+
   //http://localhost:5000/users/4
   getUser(id: number): Observable<User> {
     console.log('gettng hero by id ');
@@ -112,5 +94,6 @@ export class UserService {
       catchError(this.handleError<User>('getUser id=${id}'))
     );
   }
+
 
 }

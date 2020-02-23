@@ -3,4 +3,5 @@ export class Publisher {
   code: string;
   description: string;
   dateAdded:Date;
+  imageUrl: string;
 }

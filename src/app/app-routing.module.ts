@@ -9,6 +9,7 @@ import {UserEditComponent} from "./user-edit/user-edit.component";
 import {PublisherEditComponent} from './publisher-edit/publisher-edit.component';
 import {PublisherListComponent} from './publisher-list/publisher-list.component';
 import {RoleEditComponent} from './role-edit/role-edit.component';
+import {PublisherAccordionComponent} from './publisher-accordion/publisher-accordion.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   //comic admin
   { path: 'gradings', component: GradingListComponent },
   { path: 'publishers', component: PublisherListComponent },
+  { path: 'publishers_accordion', component: PublisherAccordionComponent},
   { path: 'publisher/:id', component: PublisherEditComponent },
   { path: 'publisher', component: PublisherEditComponent },
   { path: 'titles', component: GradingListComponent },
@@ -35,7 +37,8 @@ const routes: Routes = [
   { path: 'roles/:id', component: RoleEditComponent },
 
 
-  { path: 'dashboard', component: GradingListComponent }
+  { path: 'dashboard', component: GradingListComponent },
+
 
 ];
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GradingListComponent } from './grading-list.component';
+import { PublisherAccordionComponent } from './publisher-accordion.component';
 
-describe('GradingListComponent', () => {
-  let component: GradingListComponent;
-  let fixture: ComponentFixture<GradingListComponent>;
+describe('PublisherAccordionComponent', () => {
+  let component: PublisherAccordionComponent;
+  let fixture: ComponentFixture<PublisherAccordionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GradingListComponent ]
+      declarations: [ PublisherAccordionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GradingListComponent);
+    fixture = TestBed.createComponent(PublisherAccordionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
